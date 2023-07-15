@@ -8,6 +8,7 @@ public interface IClientRepository
         bool AddClient(Client client);
         bool DeleteClient(Client client);
         bool UpdateClient(Client client);
+        bool ClientExist(int clientId);
         Client GetClient(int clientId);
         Client GetClient(string clientName);
         ICollection<Client> GetAll();

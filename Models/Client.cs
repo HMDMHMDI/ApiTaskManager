@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using ApiTaskManager.Models;
 
 public class Client

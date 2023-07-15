@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ApiTaskManager.Models;
 public class Admin
 {

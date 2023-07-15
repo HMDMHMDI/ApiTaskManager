@@ -3,6 +3,7 @@ using System;
 using ApiTaskManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiTaskManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230715071425_How")]
+    partial class How
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,6 +104,9 @@ namespace ApiTaskManager.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Clients");
                 });
@@ -210,9 +216,6 @@ namespace ApiTaskManager.Migrations
                     b.HasIndex("AdminId")
                         .IsUnique();
 
-                    b.HasIndex("ClientId")
-                        .IsUnique();
-
                     b.ToTable("Users");
                 });
 
@@ -273,7 +276,15 @@ namespace ApiTaskManager.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("User", "User")
+                        .WithOne("Client")
+                        .HasForeignKey("Client", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Owner");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClientTask", b =>
@@ -322,27 +333,13 @@ namespace ApiTaskManager.Migrations
                     b.HasOne("ApiTaskManager.Models.Admin", "Admin")
                         .WithOne("User")
                         .HasForeignKey("User", "AdminId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.HasOne("Client", "Client")
-                        .WithOne("User")
-                        .HasForeignKey("User", "ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Admin");
-
-                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("ApiTaskManager.Models.Admin", b =>
-                {
-                    b.Navigation("User")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Client", b =>
                 {
                     b.Navigation("User")
                         .IsRequired();
@@ -359,6 +356,9 @@ namespace ApiTaskManager.Migrations
 
             modelBuilder.Entity("User", b =>
                 {
+                    b.Navigation("Client")
+                        .IsRequired();
+
                     b.Navigation("Owner")
                         .IsRequired();
                 });

@@ -1,4 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using ApiTaskManager.Models;
+using Microsoft.AspNetCore.Identity;
+
 public class User
 {
     public int Id { get; set; }

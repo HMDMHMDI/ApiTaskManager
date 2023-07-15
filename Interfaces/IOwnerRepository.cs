@@ -9,17 +9,14 @@ public interface IOwnerRepository
     bool UpdateOwner(Owner owner);
     bool DeleteOwner(Owner owner);
     bool OwnerExist(int ownerId);
-    int GetTasksOfOwner(int ownerId);
+    ICollection<Task> GetTasksOfOwner(int ownerId);
     ICollection<Owner> GetAll();
-    Owner GetOwner(string name);
+    Owner GetOwner(string Coname);
     Owner GetOwner(int id);
     //Get Task From Owner
     ICollection<Task> GetTasksByOwner(int ownerId);
-    ICollection<Task> GetTasksByOwner(string ownerName);
     //Get Admin From Owner
-    ICollection<Admin> GetAdminsByOwner(string ownerName);
-    ICollection<Admin> GetAdminsByOwner(int adminId);
+    ICollection<Admin> GetAdminsByOwner(int ownerId);
     //Get Client From Owner
-    ICollection<Client> GetClientByOwner(string ownerName);
-    ICollection<Client> GetClientByOwner(int clientId);
+    ICollection<Client> GetClientsByOwner(int ownerId);
 }
